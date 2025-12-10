@@ -1,0 +1,321 @@
+// MoetDistributionChart.module.scss
+
+.chartWrapper {
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  margin-top: 24px;
+}
+
+// --- Controls Section ---
+.chartControls {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #fcfcfd;
+  border-bottom: 1px solid #eaecf0;
+  gap: 20px;
+  flex-wrap: wrap;
+
+  .controlGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    @media (min-width: 1024px) {
+      flex-direction: row;
+      align-items: center;
+    }
+  }
+
+  .label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475467;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .doubleInput {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .dropdownShort { min-width: 130px; }
+  .dropdown { min-width: 160px; }
+  .dropdownWide { min-width: 200px; }
+
+  .separator {
+    width: 1px;
+    height: 24px;
+    background-color: #d0d5dd;
+    display: none;
+    @media (min-width: 1200px) { display: block; }
+  }
+
+  // Toggle Mode Buttons (Count vs Percent)
+  .modeToggleGroup {
+    display: flex;
+    background-color: #f2f4f7;
+    padding: 4px;
+    border-radius: 8px;
+    gap: 4px;
+    margin-left: auto; // Đẩy sang phải
+  }
+
+  .toggleBtn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    color: #667085;
+    font-size: 0.85rem;
+    font-weight: 500;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: #1d2939;
+      background-color: rgba(255,255,255,0.5);
+    }
+
+    &.active {
+      background-color: #fff;
+      color: #0056b3;
+      font-weight: 600;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    }
+
+    .btnText {
+      display: none;
+      @media (min-width: 768px) { display: inline; }
+    }
+  }
+}
+
+// --- Chart Area ---
+.chartContainer {
+  padding: 24px;
+  position: relative;
+  min-height: 500px;
+  background-color: #fff;
+
+  .headerArea {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+    .chartTitle {font-weight: 550 !important;
+
+    margin: 0 0 6px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #101828;
+  }
+
+  .subTitle {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #667085;
+  }
+
+  .chartLegend {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed #eaecf0;
+
+    .legendItem {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #344054;
+      font-weight: 500;
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+      }
+    }
+  }
+}
+
+// --- Custom Tooltip ---
+.customTooltip {
+  background-color: #fff;
+  padding: 12px;
+  border: 1px solid #eaecf0;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  min-width: 180px;
+
+  .tooltipHeader {
+    font-weight: 700;
+    color: #101828;
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid #f2f4f7;
+    padding-bottom: 4px;
+  }
+
+  .tooltipRow {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: #344054;
+    margin-bottom: 4px;
+  }
+
+  .evalRow {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-align: right;
+  }
+}
+// KpiChartByGrade.module.scss
+
+$border-color: #eaecf0;
+$text-primary: #101828;
+$text-secondary: #667085;
+$bg-primary: #ffffff;
+
+.chartContainer {
+  background-color: $bg-primary;
+  width: 100%;
+  overflow: hidden;
+  margin-bottom: 24px; // Cách bảng bên dưới một chút
+  display: flex;
+  flex-direction: column;
+  .noDataOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #667085;
+    font-style: italic;
+    font-size: 0.95rem;
+    z-index: 10;
+  }
+
+}
+
+// --- CHART AREA ---
+.chartBody {
+  padding: 24px;
+  height: 400px; // Chiều cao cố định cho vùng vẽ biểu đồ
+  width: 100%;
+}
+
+  .chartTitle {font-weight: 550 !important;
+
+  margin: 0 0 4px 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text-primary;
+}
+
+.chartSubtitle {
+  margin: 0 0 20px 0;
+  font-size: 0.85rem;
+  color: $text-secondary;
+}
+
+.customTooltip {
+  background-color: rgba(255, 255, 255, 0.95);
+  border: 1px solid $border-color;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+
+  .tooltipLabel {
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: $text-primary;
+    border-bottom: 1px solid $border-color;
+    padding-bottom: 4px;
+  }
+
+  .tooltipItem {
+    font-size: 0.85rem;
+    color: $text-secondary;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    span {
+      font-weight: 600;
+    }
+  }
+}
+
+.chartWrapper {
+  background: #ffffff;
+  border: 1px solid #eaecf0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  width: 100%;
+  margin-top: 24px; // Cách bảng bên trên 1 chút
+}
+
+// --- Controls Section ---
+.chartControls {
+  display: flex;
+  align-items: center;
+  padding: 16px 24px;
+  background-color: #fcfcfd; // Màu nền hơi khác header bảng chút cho phân biệt
+  border-bottom: 1px solid #eaecf0;
+  gap: 24px;
+  flex-wrap: wrap;
+
+  .controlGroup {
+    display: flex;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475467;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+  }
+
+  .dropdown {
+    min-width: 180px;
+  }
+
+  .separator {
+    width: 1px;
+    height: 24px;
+    background-color: #d0d5dd;
+  }
+}
+

@@ -1,0 +1,208 @@
+// Google Color Palette references
+$google-grey-100: #f1f3f4;
+$google-grey-200: #e8eaed;
+$google-grey-300: #dadce0;
+$google-grey-800: #3c4043;
+$google-blue-600: #1a73e8;
+$google-blue-50: #e8f0fe;
+$google-red-500: #ea4335;
+$text-primary: #202124;
+$text-secondary: #5f6368;
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 300px;
+  font-family: 'Roboto', 'Segoe UI', sans-serif;
+  user-select: none;
+}
+
+// === Trigger Button ===
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 16px;
+  background-color: $google-grey-100;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: $text-primary;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 42px; // Đảm bảo chiều cao đồng nhất
+
+  &:hover {
+    background-color: darken($google-grey-100, 3%);
+  }
+
+  &.active {
+    background-color: $google-grey-200;
+  }
+
+  .label {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-right: 8px;
+
+    &.placeholder {
+      color: $text-secondary;
+      font-weight: 400;
+    }
+  }
+
+  .icon {
+    display: flex;
+    align-items: center;
+    color: $text-secondary;
+    transition: transform 0.2s ease;
+    flex-shrink: 0;
+
+    &.rotate {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+// === Dropdown Menu ===
+.dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  width: 100%;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2),
+  0 8px 10px 1px rgba(0,0,0,0.14),
+  0 3px 14px 2px rgba(0,0,0,0.12);
+  z-index: 1000;
+  overflow: hidden;
+  animation: fadeIn 0.15s ease-out;
+  display: flex;
+  flex-direction: column;
+}
+
+// === Search Bar ===
+.searchWrapper {
+  padding: 8px;
+  border-bottom: 1px solid $google-grey-200;
+  background: white;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid $google-grey-300;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+  color: $text-primary;
+
+  &:focus {
+    border-color: $google-blue-600;
+  }
+}
+
+// === Actions Bar (New for Checkbox) ===
+.actionsBar {
+  display: flex;
+  justify-content: space-between;
+  padding: 6px 16px;
+  background-color: #fafafa;
+  border-bottom: 1px solid $google-grey-200;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  font-size: 12px;
+  font-weight: 500;
+  color: $google-blue-600;
+  cursor: pointer;
+  padding: 4px 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.clearBtn {
+    color: $text-secondary;
+    &:hover {
+      color: $google-red-500;
+    }
+  }
+}
+
+// === Options List ===
+.list {
+  max-height: 250px;
+  overflow-y: auto;
+  padding: 4px 0;
+  margin: 0;
+  list-style: none;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background-color: $google-grey-300;
+    border-radius: 3px;
+  }
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  font-size: 14px;
+  color: $text-primary;
+  cursor: pointer;
+  transition: background-color 0.1s;
+
+  &:hover {
+    background-color: $google-grey-100;
+  }
+
+  &.selected {
+    background-color: $google-blue-50;
+    color: $google-blue-600; // Text màu xanh khi active
+  }
+
+  .optionContent {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+
+  // Icon vuông (Checkbox)
+  .checkboxIcon, .checkboxIconUnchecked {
+    font-size: 16px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+
+  .checkboxIcon {
+    color: $google-blue-600;
+  }
+
+  .checkboxIconUnchecked {
+    color: $text-secondary;
+    opacity: 0.6;
+  }
+}
+
+.empty {
+  padding: 16px;
+  text-align: center;
+  color: $text-secondary;
+  font-size: 13px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}

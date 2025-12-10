@@ -1,0 +1,2075 @@
+// PageReport.module.scss
+
+// --- Variables ---
+$primary-color: #0056b3; // Xanh đậm cho text active
+$active-bg: #A3D2F0; // Xanh nhạt nền active (giống hình mẫu)
+$hover-bg: #f0f2f5; // Xám nhạt khi hover
+$text-color: #333333; // Màu chữ thường
+$text-secondary: #666666; // Màu chữ phụ
+$border-radius: 999px; // Bo tròn hoàn toàn (Pill shape)
+$transition: all 0.2s ease-in-out;
+
+.pageContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #ffffff;
+  position: relative;
+  height: max-content;
+  justify-content: flex-start;
+  padding: 24px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+// --- Top Filter Bar ---
+.topFilterBar {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e0e0e0;
+
+  .metadataControls {
+    display: flex;
+    gap: 32px; // Khoảng cách giữa 2 dropdown
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .filterItem {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 250px; // Đảm bảo dropdown có độ rộng vừa phải
+
+    .filterLabel {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: $text-secondary;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dropdown {
+      width: 100%;
+      // Override style của RadioDropdown nếu cần
+      &.disabled {
+        opacity: 0.6;
+        pointer-events: none;
+      }
+    }
+  }
+}
+
+// --- Tab Navigation ---
+.tabNavigation {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+  position: sticky;
+  background: white;
+  top: 0;
+  padding: 1rem 0;
+  left: 0;
+  z-index: 10000;
+  /* Thay cho border-bottom */
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+  // Nút Tab
+  .tabItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    padding: 10px 20px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    border-radius: $border-radius;
+    transition: $transition;
+
+    // Font style
+    font-size: 1rem;
+    font-weight: 500;
+    color: $text-color;
+
+    .tabIcon {
+      display: flex;
+      align-items: center;
+      font-size: 1.1rem;
+    }
+
+    // Hover state
+    &:hover {
+      background-color: $hover-bg;
+    }
+
+    // Active State (Giống nút "Specimen" trong hình)
+    &.active {
+      background-color: $active-bg; // Màu xanh nhạt
+      color: $primary-color; // Màu chữ xanh đậm
+      font-weight: 600;
+
+      &:hover {
+        background-color: darken($active-bg, 5%);
+      }
+    }
+  }
+}
+
+// --- Content Area ---
+.contentArea {
+  height: 100vh;
+  padding: 1rem 0;
+}
+
+// ... (Code cũ giữ nguyên)
+
+// --- STYLE CHO TAB OVERVIEW & CHART SECTION ---
+
+.overviewGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px; // Khoảng cách giữa các ChartSection
+  padding-bottom: 40px;
+}
+
+.chartCard {
+  background: #ffffff;
+  overflow: hidden;
+  transition: box-shadow 0.3s ease;
+  border: 1px dashed #ced4da; // Viền đứt nét tạm thời cho placeholder
+
+  &:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.08);
+  }
+
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px 24px;
+    border-bottom: 1px solid #f2f4f7;
+    background-color: #fff;
+    flex-wrap: wrap; // Cho phép xuống dòng trên mobile
+    gap: 16px;
+
+    .titleGroup {
+      flex: 1;
+
+      .cardTitle {
+        margin: 0;
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #101828; // Màu đen than
+      }
+
+      .cardSubtitle {
+        margin: 4px 0 0 0;
+        font-size: 0.85rem;
+        color: #667085; // Màu xám nhạt
+      }
+    }
+  }
+
+  .cardBody {
+    min-height: 350px; // Chiều cao tối thiểu để biểu đồ hiển thị đẹp
+    position: relative;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .emptyState {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      min-height: 300px;
+    }
+
+    .chartPlaceholderBox {
+      width: 100%;
+      height: 100%;
+      min-height: 250px;
+      border: 2px dashed #e4e7ec;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #fcfcfd;
+
+      span {
+        color: #98a2b3;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+// ... (Các phần code cũ của TabOverview giữ nguyên)
+
+// --- STYLE CHO TAB KPI REPORT (UPDATED) ---
+
+.kpiContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.kpiToolbar {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 16px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaecf0;
+  gap: 16px;
+  flex-wrap: wrap; // Responsive: xuống dòng nếu màn hình nhỏ
+
+  // Dải phân cách dọc
+  .divider {
+    width: 1px;
+    height: 32px; // Cao hơn một chút để cân đối với dropdown
+    background-color: #eaecf0;
+    margin: 0 8px;
+  }
+
+  // Khoảng trống đẩy Toggle về cuối
+  .spacer {
+    flex: 1;
+  }
+
+  .toolbarGroup, .toolbarGroupMain {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .toolbarGroupMain {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .groupLabel {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #667085;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap; // Không xuống dòng text label
+  }
+
+  // --- Style riêng cho từng loại Dropdown để căn chỉnh độ rộng ---
+
+  .dropdownKpi {
+    width: 280px; // KPI text thường dài, cần rộng
+    z-index: 102; // Đảm bảo nổi lên trên nếu đè nhau
+  }
+
+  .dropdownTimeType {
+    width: 200px;
+    z-index: 101;
+  }
+
+  .dropdownTimePeriod {
+    width: 150px;
+    z-index: 100;
+  }
+
+  // --- Style cho nút Toggle (Giữ nguyên) ---
+  .toggleControl {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 8px;
+    transition: background 0.2s;
+    user-select: none;
+    border: 1px solid transparent; // Tránh giật layout khi hover
+
+    &:hover {
+      background-color: #f2f4f7;
+    }
+
+    .toggleLabel {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #344054;
+    }
+
+    .toggleIcon {
+      font-size: 1.8rem; // Icon to hơn một chút cho dễ bấm
+      color: #98a2b3; // Màu xám khi tắt
+      display: flex;
+      align-items: center;
+      height: 24px;
+      transition: color 0.2s;
+    }
+
+    // Trạng thái Active (Bật)
+    &.active {
+      background-color: #f0f9ff;
+      border-color: #b9e6fe;
+
+      .toggleLabel {
+        color: #0056b3;
+      }
+
+      .toggleIcon {
+        color: #0056b3; // Màu xanh khi bật
+      }
+    }
+  }
+}
+
+.kpiContentArea {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  .emptyState {
+    text-align: center;
+    color: #667085;
+    background-color: #f9fafb;
+    padding: 32px;
+    border-radius: 12px;
+    border: 1px dashed #d0d5dd;
+
+    p {
+      margin-bottom: 16px;
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .placeholderNote {
+      font-style: italic;
+      color: #98a2b3;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+// ... (Code cũ giữ nguyên)
+
+// --- STYLE CHO KPI TABLE (EXCEL STYLE) ---
+
+.tableWrapper {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.tableScrollContainer {
+  width: 100%;
+  height: 600px; // Chiều cao cố định để có scroll dọc
+  overflow: auto; // Cho phép scroll cả 2 chiều
+  position: relative;
+  border: 1px solid #d0d5dd;
+}
+
+.excelTable {
+  width: max-content; // Mở rộng chiều ngang theo nội dung
+  border-collapse: separate; // Để hỗ trợ sticky header
+  border-spacing: 0;
+  font-size: 0.85rem;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  th, td {
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  // --- Sticky Header Logic ---
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 20; // Cao hơn cột sticky bên trái
+
+    tr {
+      background-color: #ebf5ee; // Màu xanh nhạt header giống hình
+    }
+
+    th {
+      font-weight: 600;
+      color: #1d2939;
+      position: sticky;
+      top: 0;
+      background-color: #ebf5ee; // Cần set background đè lên nội dung khi scroll
+      box-shadow: 0 1px 0 #d0d5dd; // Giả viền dưới
+    }
+
+    // Header Khối (Row 1)
+    .headerGrade {
+      font-size: 0.95rem;
+      border-bottom: 1px solid #ccc;
+    }
+
+    // Header Chương trình (Row 2)
+    .headerProgram {
+      font-size: 0.8rem;
+      color: #667085;
+      top: 33px; // Đẩy xuống bằng chiều cao hàng 1
+    }
+
+    // Ô góc trên cùng bên trái (Môn học Header)
+    .headerSubject {
+      z-index: 30 !important; // Cao nhất để luôn nổi
+      left: 0;
+      min-width: 250px;
+      text-align: left;
+      padding-left: 16px;
+    }
+  }
+
+  // --- Sticky Column Logic (Môn học) ---
+  tbody {
+    td.stickyCol {
+      position: sticky;
+      left: 0;
+      background-color: #f9fafb; // Màu nền cột cố định
+      z-index: 10;
+      text-align: left;
+      font-weight: 500;
+      color: #344054;
+      border-right: 2px solid #d0d5dd; // Viền đậm hơn phân cách
+      min-width: 250px;
+      padding-left: 16px;
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  // --- Data Cell Styles ---
+  .dataCell {
+    background-color: #fff;
+    min-width: 80px;
+    transition: background-color 0.2s;
+
+    .cellContent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .targetVal {
+      font-weight: 500;
+      color: #101828;
+    }
+
+    .actualWrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+    }
+
+    .iconSuccess {
+      color: #12b76a;
+    }
+
+    .iconFail {
+      color: #f04438;
+    }
+
+    // --- Color Coding States (Khi bật Actuals) ---
+    &.success {
+      background-color: #ecfdf3; // Xanh lá nhạt
+      .actualVal {
+        color: #027a48;
+        font-weight: 700;
+      }
+    }
+
+    &.warning {
+      background-color: #fffaeb; // Vàng nhạt
+      .actualVal {
+        color: #b54708;
+        font-weight: 700;
+      }
+    }
+
+    &.fail {
+      background-color: #fef3f2; // Đỏ nhạt
+      .actualVal {
+        color: #b42318;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .emptyCell {
+    background-color: #f2f4f7;
+    color: #98a2b3;
+  }
+}
+
+// ... (Giữ nguyên các phần trên)
+
+// --- STYLE CHO KPI TABLE (EXCEL STYLE) & CONTROLS ---
+
+.tableWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column; // Để Controls nằm trên Table
+}
+
+// 1. Controls Bar Styles
+.tableControls {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid #eaecf0;
+  gap: 16px;
+
+  .controlItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .controlLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475467;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .controlDropdown {
+    min-width: 180px;
+
+
+  }
+
+  .controlSeparator {
+    width: 1px;
+    height: 20px;
+    background-color: #d0d5dd;
+  }
+}
+
+// 2. Scroll Container
+.tableScrollContainer {
+  flex: 1;
+  width: 100%;
+  height: 600px; // Chiều cao cố định
+  overflow: auto;
+  position: relative;
+  border: 1px solid #d0d5dd;
+  border-top: none; // Bỏ viền trên vì đã có border của Controls
+}
+
+// 3. Table Styles (Updated)
+.excelTable {
+  width: max-content;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  th, td {
+    border-right: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 8px 12px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    tr {
+      background-color: #ebf5ee;
+    }
+
+    // Style cho Main Header (Khối hoặc Chương trình)
+    .headerMain {
+      position: sticky;
+      top: 0;
+      background-color: #ebf5ee;
+      font-weight: 700;
+      color: #101828;
+      border-bottom: 1px solid #ccc;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+      box-shadow: 0 1px 0 #d0d5dd;
+    }
+
+    // Style cho Sub Header (Hàng thứ 2)
+    .headerSub {
+      position: sticky;
+      top: 33px; // Chiều cao hàng 1 (ước lượng)
+      background-color: #f2f4f7; // Màu nền khác một chút để phân cấp
+      color: #475467;
+      font-weight: 600;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 0 #d0d5dd;
+    }
+
+    .headerSubject {
+      z-index: 30 !important;
+      left: 0;
+      min-width: 250px;
+      text-align: left;
+      padding-left: 16px;
+      background-color: #ebf5ee;
+      box-shadow: 0 1px 0 #d0d5dd; // Sửa lỗi border khi scroll
+    }
+  }
+
+  tbody {
+    td.stickyCol {
+      position: sticky;
+      left: 0;
+      background-color: #f9fafb;
+      z-index: 10;
+      text-align: left;
+      font-weight: 500;
+      color: #344054;
+      border-right: 2px solid #d0d5dd;
+      min-width: 250px;
+      padding-left: 16px;
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+    }
+  }
+
+  // --- Data Cell Styles (Giữ nguyên) ---
+  .dataCell {
+    background-color: #fff;
+    min-width: 80px;
+    transition: background-color 0.2s;
+
+    .cellContent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+
+    .targetVal {
+      font-weight: 500;
+      color: #101828;
+    }
+
+    .actualWrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.8rem;
+    }
+
+    .iconSuccess {
+      color: #12b76a;
+    }
+
+    .iconFail {
+      color: #f04438;
+    }
+
+    &.success {
+      background-color: #ecfdf3;
+
+      .actualVal {
+        color: #027a48;
+        font-weight: 700;
+      }
+    }
+
+    &.warning {
+      background-color: #fffaeb;
+
+      .actualVal {
+        color: #b54708;
+        font-weight: 700;
+      }
+    }
+
+    &.fail {
+      background-color: #fef3f2;
+
+      .actualVal {
+        color: #b42318;
+        font-weight: 700;
+      }
+    }
+  }
+
+  .emptyCell {
+    background-color: #f2f4f7;
+    color: #98a2b3;
+  }
+}
+// ... (Các phần cũ giữ nguyên)
+
+// --- UPDATED TABLE STYLES ---
+
+// 1. Controls Bar Styles (Updated layout for CheckboxDropdown)
+.tableControls {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 24px; // Tăng khoảng cách giữa các nhóm
+  flex-wrap: wrap; // Cho phép xuống dòng nếu màn hình nhỏ
+
+  .controlGroup {
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .controlLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #344054;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  // Override style để dropdown hòa nhập với thanh công cụ
+  .controlDropdown {
+    min-width: 200px;
+  }
+
+  .separator {
+    width: 1px;
+    height: 24px;
+    background-color: #eaecf0;
+  }
+}
+
+.excelTable {
+
+  .dataCell {
+    background-color: #fff;
+    min-width: 80px;
+    transition: background-color 0.2s;
+    position: relative; // Để căn chỉnh icon
+
+    .cellContent {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+    }
+
+    .targetVal {
+      font-size: 0.8rem;
+      color: #667085;
+      margin-bottom: 2px;
+    }
+
+    .actualWrapper {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    // --- LOGIC MÀU MỚI ---
+
+    // ĐẠT: Xanh lá (Green)
+    &.success {
+      background-color: rgba(151, 217, 162, 0.77) !important;
+
+      .actualVal { color: #027a48; }
+      .iconStatus { color: #12b76a; font-size: 0.8rem; }
+    }
+
+    // KHÔNG ĐẠT: Cam (Orange)
+    &.fail {
+      background-color: #ffecbe !important; // Nền cam nhạt
+
+      .actualVal { color: #b54708; } // Chữ cam đậm
+      .iconStatus { color: #f79009; font-size: 0.8rem; }
+    }
+  }
+}
+// ... (Các phần trên giữ nguyên)
+
+// --- TOOLTIP STYLES (NEW) ---
+
+// Backdrop vô hình full màn hình để bắt sự kiện click outside
+.tooltipBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 990; // Cao hơn table header nhưng thấp hơn tooltip
+  background: transparent;
+  cursor: default;
+}
+
+// Thẻ Tooltip chính
+.tooltipCard {
+  position: fixed; // Fixed để không bị che bởi overflow:hidden của table
+  transform: translate(-50%, -100%); // Căn giữa và đẩy lên trên vị trí click
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 280px;
+  z-index: 1000; // Cao nhất
+  padding: 0;
+  border: 1px solid #eaecf0;
+  animation: fadeIn 0.2s ease-out;
+
+  .tooltipHeader {
+    padding: 12px 16px;
+    background-color: #f9fafb;
+    border-bottom: 1px solid #eaecf0;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+
+    .tooltipTitle {
+      font-weight: 700;
+      color: #101828;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .tooltipStatus {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+
+      &.success { background: #ecfdf3; color: #027a48; border: 1px solid #d1fadf; }
+      &.fail { background: #fffaeb; color: #b54708; border: 1px solid #fec84b; }
+    }
+  }
+
+  .tooltipBody {
+    padding: 16px;
+
+    .tooltipRow {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+
+      .label { color: #667085; }
+      .value { font-weight: 600; color: #344054; }
+    }
+
+    .divider {
+      height: 1px;
+      background: #f2f4f7;
+      margin: 12px 0;
+    }
+
+    .metricRow {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+
+      .metricItem {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fcfcfd;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #f2f4f7;
+
+        .iconT { color: #667085; font-size: 0.8rem; margin-bottom: 4px; }
+        .iconA { color: #0056b3; font-size: 0.8rem; margin-bottom: 4px; }
+
+        .mLabel { font-size: 0.75rem; color: #667085; }
+        .mValue {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: #101828;
+
+          &.success { color: #027a48; }
+          &.fail { color: #b54708; }
+        }
+      }
+    }
+  }
+
+  // Mũi tên trỏ xuống
+  .tooltipArrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: #fff;
+    border-right: 1px solid #eaecf0;
+    border-bottom: 1px solid #eaecf0;
+    z-index: 1001;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -90%); }
+  to { opacity: 1; transform: translate(-50%, -100%); }
+}
+
+// --- TABLE CELL UPDATES ---
+
+.excelTable .dataCell {
+  cursor: pointer; // Báo hiệu có thể click
+
+  &:hover {
+    background-color: #f2f4f7; // Hover effect nhẹ
+  }
+
+  // Trạng thái Active khi đang mở tooltip
+  &.activeCell {
+    box-shadow: inset 0 0 0 2px #0056b3; // Viền xanh bên trong
+    z-index: 5; // Nổi lên trên 1 chút
+  }
+
+  // Màu trạng thái
+  &.success { background-color: #ecfdf3 !important; .actualVal { color: #027a48; } }
+  &.fail { background-color: #fffaeb !important; .actualVal { color: #b54708; } }
+}
+// PageReport.module.scss
+
+.tableScrollContainer {
+  flex: 1;
+  width: 100%;
+
+  // --- THAY ĐỔI Ở ĐÂY ---
+  height: auto;           // Tự động co theo nội dung nếu ít dòng
+  max-height: 550px;      // Giới hạn chiều cao tối đa (khoảng 12-15 hàng)
+  min-height: 300px;      // Đảm bảo bảng không quá thấp nếu chưa có dữ liệu
+  // ----------------------
+
+  overflow: auto;         // Cho phép cuộn cả ngang và dọc khi nội dung tràn
+  position: relative;
+  border: 1px solid #d0d5dd;
+  border-top: none;       // Bỏ viền trên (vì đã dính với thanh Controls)
+  border-radius: 0 0 8px 8px;
+  background-color: #fff; // Đảm bảo nền trắng
+
+  // Tùy chỉnh thanh cuộn cho đẹp hơn (Optional)
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 0 0 8px 0;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    &:hover { background: #a8a8a8; }
+  }
+}
+// --- VARIABLES ---
+$bg-white: #ffffff;
+$border-color: #eaecf0;
+$border-grid: #e0e0e0;
+$text-primary: #101828;
+$text-secondary: #667085;
+$text-tertiary: #98a2b3;
+
+// Colors for Status
+$success-bg: rgba(151, 217, 162, 0.77);
+$success-text: #027a48;
+$success-icon: #12b76a;
+
+$fail-bg: #ffecbe; // Màu cam nhạt
+$fail-text: #b54708; // Cam nâu đậm
+$fail-icon: #f79009;
+
+// Colors for Tooltip
+$tooltip-success-bg: #ecfdf3;
+$tooltip-success-text: #027a48;
+$tooltip-success-border: #d1fadf;
+
+$tooltip-fail-bg: #fffaeb;
+$tooltip-fail-text: #b54708;
+$tooltip-fail-border: #fec84b;
+
+// --- LAYOUT CONTAINER ---
+.tableWrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: $bg-white;
+  border-radius: 8px;
+  overflow: hidden; // Bo góc container
+}
+
+// --- CONTROLS SECTION ---
+.tableControls {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  gap: 24px;
+  background-color: #f9fafb;
+  border-bottom: 1px solid $border-color;
+  flex-wrap: wrap;
+
+  .controlGroup {
+    display: flex;
+  }
+
+  .controlLabel {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #344054;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+  }
+
+  .controlDropdown {
+    min-width: 200px;
+  }
+
+  .separator {
+    width: 1px;
+    height: 24px;
+    background-color: $border-color;
+  }
+}
+
+// --- TABLE SCROLL AREA ---
+.tableScrollContainer {
+  flex: 1;
+  width: 100%;
+  height: auto;
+  max-height: 600px; // Chiều cao tối đa trước khi scroll
+  min-height: 300px;
+  overflow: auto; // Scroll 2 chiều
+  position: relative;
+  background-color: $bg-white;
+
+  // Custom Scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  &::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+    &:hover { background: #a8a8a8; }
+  }
+}
+
+// --- EXCEL TABLE STYLE ---
+.excelTable {
+  width: max-content;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+
+  th, td {
+    border-right: 1px solid $border-grid;
+    border-bottom: 1px solid $border-grid;
+    padding: 8px 12px;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  // HEADER STYLES
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    tr {
+      background-color: #ebf5ee; // Màu nền header
+    }
+
+    .headerMain {
+      position: sticky;
+      top: 0;
+      background-color: #ebf5ee;
+      font-weight: 700;
+      color: $text-primary;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      box-shadow: 0 1px 0 $border-grid; // Giả border bottom khi sticky
+    }
+
+    .headerSub {
+      position: sticky;
+      top: 33px; // Đẩy xuống bằng chiều cao hàng 1 (ước lượng)
+      background-color: #f2f4f7;
+      color: #475467;
+      font-weight: 600;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 0 $border-grid;
+    }
+
+    .headerSubject {
+      position: sticky;
+      left: 0;
+      z-index: 30 !important; // Nổi lên trên tất cả
+      background-color: #ebf5ee;
+      min-width: 250px;
+      text-align: left;
+      padding-left: 16px;
+      box-shadow: 1px 1px 0 $border-grid;
+    }
+  }
+
+  // BODY STYLES
+  tbody {
+    // Sticky Subject Column
+    td.stickyCol {
+      position: sticky;
+      left: 0;
+      background-color: #f9fafb;
+      z-index: 10;
+      text-align: left;
+      font-weight: 500;
+      color: #344054;
+      border-right: 2px solid $border-grid; // Border đậm phân cách
+      min-width: 250px;
+      padding-left: 16px;
+      box-shadow: 2px 0 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .emptyCell {
+      background-color: #f2f4f7;
+      color: $text-tertiary;
+    }
+
+    // Data Cell
+    .dataCell {
+      background-color: $bg-white;
+      min-width: 80px;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative; // Cần thiết để highlight
+
+      .cellContent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+      }
+
+      .targetVal {
+        font-size: 0.8rem;
+        color: $text-secondary;
+      }
+
+      .actualWrapper {
+        font-weight: 700;
+        font-size: 0.9rem;
+      }
+
+      // --- TRẠNG THÁI MÀU SẮC ---
+      &.success {
+        background-color: $success-bg !important;
+        .actualVal { color: $success-text; }
+      }
+
+      &.fail {
+        background-color: $fail-bg !important;
+        .actualVal { color: $fail-text; }
+      }
+
+      // Hover Effect
+      &:hover {
+        filter: brightness(0.95); // Làm tối nhẹ khi hover
+      }
+
+      // Active State (Khi Tooltip mở)
+      &.activeCell {
+        box-shadow: inset 0 0 0 2px #0056b3; // Viền xanh bên trong
+        z-index: 5;
+      }
+    }
+  }
+}
+
+// --- TOOLTIP STYLES (PORTAL) ---
+
+.tooltipBackdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9998; // Dưới tooltip một chút
+  background: transparent; // Trong suốt
+  cursor: default;
+}
+
+.tooltipCard {
+  position: fixed; // Fixed theo viewport (do dùng Portal)
+  transform: translate(-50%, -100%); // Căn giữa ngang, đẩy lên trên
+  background-color: #ffffff;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  width: 280px;
+  z-index: 9999; // Cao nhất hệ mặt trời
+  padding: 0;
+  border: 1px solid $border-color;
+  animation: fadeIn 0.2s ease-out;
+  pointer-events: none; // Cho phép click xuyên qua nếu cần, nhưng ở đây có backdrop rồi
+
+  .tooltipHeader {
+    padding: 12px 16px;
+    background-color: #f9fafb;
+    border-bottom: 1px solid $border-color;
+    border-radius: 8px 8px 0 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+
+    .tooltipTitle {
+      font-weight: 700;
+      color: $text-primary;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+
+    .tooltipStatus {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 12px;
+      white-space: nowrap;
+
+      &.success { background: $tooltip-success-bg; color: $tooltip-success-text; border: 1px solid $tooltip-success-border; }
+      &.fail { background: $tooltip-fail-bg; color: $tooltip-fail-text; border: 1px solid $tooltip-fail-border; }
+    }
+  }
+
+  .tooltipBody {
+    padding: 16px;
+
+    .tooltipRow {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.85rem;
+      margin-bottom: 8px;
+
+      .label { color: $text-secondary; }
+      .value { font-weight: 600; color: #344054; }
+    }
+
+    .divider {
+      height: 1px;
+      background: #f2f4f7;
+      margin: 12px 0;
+    }
+
+    .metricRow {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+
+      .metricItem {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: #fcfcfd;
+        padding: 8px;
+        border-radius: 6px;
+        border: 1px solid #f2f4f7;
+
+        .iconT { color: $text-secondary; font-size: 0.8rem; margin-bottom: 4px; }
+        .iconA { color: #0056b3; font-size: 0.8rem; margin-bottom: 4px; }
+
+        .mLabel { font-size: 0.75rem; color: $text-secondary; }
+        .mValue {
+          font-size: 1.1rem;
+          font-weight: 700;
+          color: $text-primary;
+
+          &.success { color: $tooltip-success-text; }
+          &.fail { color: $tooltip-fail-text; }
+        }
+      }
+    }
+  }
+
+  // Mũi tên trỏ xuống
+  .tooltipArrow {
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%) rotate(45deg);
+    width: 12px;
+    height: 12px;
+    background: #ffffff;
+    border-right: 1px solid $border-color;
+    border-bottom: 1px solid $border-color;
+    z-index: 10000;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -90%); }
+  to { opacity: 1; transform: translate(-50%, -100%); }
+}
+// --- NEW STYLES FOR KPI CONFIGURATION ---
+
+// 1. Action Buttons
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+
+  &.btnCreate {
+    background-color: #0056b3;
+    color: white;
+    &:hover { background-color: darken(#0056b3, 10%); }
+  }
+
+  &.btnEditMode {
+    background-color: #ffffff;
+    border-color: #d0d5dd;
+    color: #344054;
+    &:hover { background-color: #f9fafb; }
+  }
+
+  &.btnSaveMode {
+    background-color: #12b76a;
+    color: white;
+    &:hover { background-color: darken(#12b76a, 5%); }
+  }
+}
+
+// 2. Table Inputs (Edit Mode)
+.cellInput {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+  outline: none;
+
+  &:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+  }
+
+  &::placeholder {
+    color: #d0d5dd;
+  }
+}
+
+// 3. N/A Text Style
+.naText {
+  color: #98a2b3;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+// 4. Modal Styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modalContent {
+  background: white;
+  width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 20px 24px -4px rgba(16, 24, 40, 0.1);
+  overflow: visible !important;
+  display: flex;
+  flex-direction: column;
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eaecf0;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #101828;
+    }
+
+    .closeBtn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #667085;
+      cursor: pointer;
+      &:hover { color: #101828; }
+    }
+  }
+
+  .modalBody {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #344054;
+
+        .required { color: #f04438; }
+      }
+
+      input[type="text"], textarea {
+        padding: 10px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 8px;
+        outline: none;
+        font-size: 0.95rem;
+
+        &:focus {
+          border-color: #0056b3;
+          box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.1);
+        }
+      }
+
+      // Style cho Dropdown bên trong Modal
+      .modalDropdown {
+        width: 100%; // Full width trong form
+      }
+    }
+
+    .boundsContainer {
+      display: flex;
+      gap: 16px;
+
+      .boundGroup {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        label {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: #344054;
+        }
+
+        .inputWithCheck {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            outline: none;
+            &:focus { border-color: #0056b3; }
+          }
+
+          .checkLabel {
+            font-size: 0.85rem;
+            color: #475467;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .errorMsg {
+      color: #f04438;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+  }
+
+  .modalFooter {
+    padding: 16px 24px;
+    border-top: 1px solid #eaecf0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: #f9fafb;
+
+    button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .btnCancel {
+      background: white;
+      border-color: #d0d5dd;
+      color: #344054;
+      &:hover { background: #f2f4f7; }
+    }
+
+    .btnSave {
+      background: #0056b3;
+      color: white;
+      &:hover { background: darken(#0056b3, 5%); }
+    }
+  }
+}
+// --- NEW STYLES FOR KPI CONFIGURATION ---
+
+// 1. Action Buttons
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap; // Giữ text thẳng hàng
+
+  &.btnCreate {
+    background-color: #0056b3;
+    color: white;
+    &:hover { background-color: darken(#0056b3, 10%); }
+  }
+
+  &.btnEditMode {
+    background-color: #ffffff;
+    border-color: #d0d5dd;
+    color: #344054;
+    &:hover { background-color: #f9fafb; }
+  }
+
+  &.btnSaveMode {
+    background-color: #12b76a;
+    color: white;
+    &:hover { background-color: darken(#12b76a, 5%); }
+  }
+}
+
+// 2. Table Inputs (Edit Mode)
+.cellInput {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+  outline: none;
+  background-color: #fff;
+
+  &:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+  }
+
+  &::placeholder {
+    color: #d0d5dd;
+  }
+}
+
+// 3. N/A Text Style
+.naText {
+  color: #98a2b3;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+// 4. Modal Styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modalContent {
+  background: white;
+  width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 20px 24px -4px rgba(16, 24, 40, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalPop 0.2s ease-out;
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eaecf0;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #101828;
+    }
+
+    .closeBtn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #667085;
+      cursor: pointer;
+      &:hover { color: #101828; }
+    }
+  }
+
+  .modalBody {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #344054;
+
+        .required { color: #f04438; }
+      }
+
+      input[type="text"], textarea {
+        padding: 10px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 8px;
+        outline: none;
+        font-size: 0.95rem;
+
+        &:focus {
+          border-color: #0056b3;
+          box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.1);
+        }
+      }
+
+      .modalDropdown {
+        width: 100%; // Đảm bảo dropdown trong modal full width
+      }
+    }
+
+    .boundsContainer {
+      display: flex;
+      gap: 16px;
+
+      .boundGroup {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        label {
+          font-size: 0.9rem;
+          font-weight: 500;
+          color: #344054;
+        }
+
+        .inputWithCheck {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+
+          input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            outline: none;
+            &:focus { border-color: #0056b3; }
+          }
+
+          .checkLabel {
+            font-size: 0.85rem;
+            color: #475467;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+
+    .errorMsg {
+      color: #f04438;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+  }
+
+  .modalFooter {
+    padding: 16px 24px;
+    border-top: 1px solid #eaecf0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: #f9fafb;
+
+    button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .btnCancel {
+      background: white;
+      border-color: #d0d5dd;
+      color: #344054;
+      &:hover { background: #f2f4f7; }
+    }
+
+    .btnSave {
+      background: #0056b3;
+      color: white;
+      &:hover { background: darken(#0056b3, 5%); }
+    }
+  }
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+// --- STYLES FOR KPI CONFIGURATION & MODALS ---
+
+// 1. Action Buttons
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &.btnCreate {
+    background-color: #0056b3;
+    color: white;
+    &:hover { background-color: darken(#0056b3, 10%); }
+  }
+
+  &.btnEditMode {
+    background-color: #ffffff;
+    border-color: #d0d5dd;
+    color: #344054;
+    &:hover { background-color: #f9fafb; }
+  }
+
+  &.btnSaveMode {
+    background-color: #12b76a;
+    color: white;
+    &:hover { background-color: darken(#12b76a, 5%); }
+  }
+}
+
+// 2. Table Inputs
+.cellInput {
+  width: 100%;
+  padding: 4px 8px;
+  border: 1px solid #d0d5dd;
+  border-radius: 4px;
+  text-align: center;
+  font-size: 0.9rem;
+  outline: none;
+  background-color: #fff;
+
+  &:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.2);
+  }
+
+  &::placeholder { color: #d0d5dd; }
+}
+
+.naText {
+  color: #98a2b3;
+  font-style: italic;
+  font-size: 0.8rem;
+}
+
+// 3. Modal Common Styles
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.modalContent {
+  background: white;
+  width: 500px;
+  border-radius: 12px;
+  box-shadow: 0 20px 24px -4px rgba(16, 24, 40, 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  animation: modalFadeIn 0.2s ease-out;
+
+  &.modalSmall {
+    width: 420px;
+  }
+
+  .modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    border-bottom: 1px solid #eaecf0;
+
+    h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      color: #101828;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .closeBtn {
+      background: none;
+      border: none;
+      font-size: 1.2rem;
+      color: #667085;
+      cursor: pointer;
+      &:hover { color: #101828; }
+    }
+  }
+
+  .modalBody {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    // Form Groups (Create Modal)
+    .formGroup {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+
+      label {
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #344054;
+        .required { color: #f04438; }
+      }
+
+      input[type="text"], textarea {
+        padding: 10px 14px;
+        border: 1px solid #d0d5dd;
+        border-radius: 8px;
+        outline: none;
+        font-size: 0.95rem;
+
+        &:focus {
+          border-color: #0056b3;
+          box-shadow: 0 0 0 2px rgba(0, 86, 179, 0.1);
+        }
+      }
+      .modalDropdown { width: 100%; }
+    }
+
+    // Bounds (Create Modal)
+    .boundsContainer {
+      display: flex;
+      gap: 16px;
+      .boundGroup {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+
+        label { font-size: 0.9rem; font-weight: 500; color: #344054; }
+
+        .inputWithCheck {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d0d5dd;
+            border-radius: 8px;
+            outline: none;
+            &:focus { border-color: #0056b3; }
+          }
+          .checkLabel {
+            font-size: 0.85rem; color: #475467;
+            display: flex; align-items: center; gap: 6px; cursor: pointer;
+          }
+        }
+      }
+    }
+
+    // Save Confirm Styles
+    .confirmText {
+      font-size: 0.95rem;
+      color: #344054;
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .applySection {
+      background-color: #f9fafb;
+      padding: 16px;
+      border-radius: 8px;
+      border: 1px solid #eaecf0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .sectionLabel {
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: #344054;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        .iconInfo { color: #0056b3; }
+      }
+
+      .modalDropdown { width: 100%; }
+
+      .hintText {
+        font-size: 0.8rem;
+        color: #667085;
+        margin: 0;
+        font-style: italic;
+      }
+
+      .emptyNote {
+        font-size: 0.85rem;
+        color: #98a2b3;
+      }
+    }
+
+    .errorMsg {
+      color: #f04438;
+      font-size: 0.9rem;
+      margin-top: 8px;
+    }
+  }
+
+  .modalFooter {
+    padding: 16px 24px;
+    border-top: 1px solid #eaecf0;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    background-color: #f9fafb;
+
+    button {
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .btnCancel {
+      background: white;
+      border-color: #d0d5dd;
+      color: #344054;
+      &:hover { background: #f2f4f7; }
+    }
+
+    .btnSave {
+      background: #0056b3;
+      color: white;
+      &:hover { background: darken(#0056b3, 5%); }
+    }
+  }
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.createKPIButton {
+  padding: 10px 20px;
+  color: white;
+  border: none;
+  background: dodgerblue;
+  cursor: pointer;
+  border-radius: 5px;
+}
