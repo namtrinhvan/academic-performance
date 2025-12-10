@@ -84,7 +84,10 @@ const TabKpiReport = () => {
                     kpiType={selectedKpi.value}   // Dùng để lấy dữ liệu
                     program={selectedProgram}
                 />
-
+                <div>TODO 1: Biểu đồ FP theo từng lớp (thuộc khối đã chọn ở KpiIntegratedAnalysis), mỗi lớp được đại diện bởi một cột,
+                    dựa theo FP được bấm vào ở biểu đồ Chi tiết Focal Point: và theo khối đã chọn ở trên</div>
+                <div>TODO 2: Biểu đồ PS (mỗi PS được đại diện bởi một cột) theo FP được bấm vào ở biểu đồ Chi tiết Focal Point:</div>
+                <div>TODO 3: Biểu đồ PS theo lớp (mỗi lớp được đại diện bởi một cột), lọc theo PS được bấm vào ở TODO 2.</div>
             </div>
         </div>
     );
