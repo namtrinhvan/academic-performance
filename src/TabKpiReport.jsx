@@ -260,11 +260,6 @@ const TabKpiReport = () => {
                                onChange={setSelectedProgram}/>
             </div>
             <div className={styles.separator}></div>
-            <div className={styles.toolbarGroupMain}>
-                <label className={styles.groupLabel}>Thời điểm (Grid):</label>
-                <RadioDropdown className={styles.controlDropdown} options={TIME_OPTIONS} value={selectedTime}
-                               onChange={setSelectedTime}/>
-            </div>
         </div>
 
         {/* --- OVERVIEW CHARTS SECTION (Đã bỏ KpiChartByClass ở đây) --- */}
@@ -277,8 +272,21 @@ const TabKpiReport = () => {
         <div className={styles.heatmapSection}>
             <div className={styles.header}>
                 <div className={styles.titleGroup}>
-                    <h3><FaLayerGroup style={{marginRight: '8px'}}/>Chi tiết KPI</h3>
-                    <p>Click vào ô lưới để xem phân tích chi tiết</p>
+                    <h3>3. Chi tiết KPI</h3>
+                    <p>Click vào từng ô để xem các biểu đồ phân tích chi tiết</p>
+                </div>
+            </div>
+            <div
+                style={{
+                    display: 'flex',
+                    height: '100%',         // hoặc một chiều cao cụ thể, ví dụ '400px'
+                    justifyContent: 'flex-end', // đẩy nội dung xuống cuối
+                }}
+            >
+                <div className={styles.toolbarGroupMain}>
+                    <label className={styles.groupLabel}>Thời điểm (Grid):</label>
+                    <RadioDropdown className={styles.controlDropdown} options={TIME_OPTIONS} value={selectedTime}
+                                   onChange={setSelectedTime}/>
                 </div>
             </div>
 
@@ -345,7 +353,7 @@ const TabKpiReport = () => {
                     {/* --- LEVEL 2: Focal Points Chart --- */}
                     <div className={styles.chartLevelContainer}>
                         <div className={styles.chartHeader}>
-                            <h5><FaChartBar/> Chi tiết Focal Points</h5>
+                            <h5>Chi tiết Focal Points</h5>
                             <div style={{display: 'flex', alignItems: 'center', gap: '10px'}}>
                                 <CheckboxDropdown options={TIME_OPTIONS} value={fpTimes} onChange={setFpTimes}
                                                   placeholder="Chọn kỳ" zIndex={1003}/>

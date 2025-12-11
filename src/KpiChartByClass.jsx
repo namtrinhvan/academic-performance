@@ -157,7 +157,7 @@ const KpiChartByClass = ({ kpiName = "KPI Học tập", kpiType = 'TDS' }) => {
                 <div className={styles.titleBlock}>
                     {/* Cập nhật tiêu đề hiển thị tên môn học */}
                     <h3>
-                        3. Báo cáo hoàn thành {kpiName} theo Lớp học
+                        Báo cáo hoàn thành {kpiName} môn học X theo Lớp học (Khối Y)
                         {/*<span style={{color: '#667085', fontWeight: 'normal', marginLeft: '6px'}}>*/}
                         {/*     {SUBJECT_OPTIONS.find(s => s.value === selectedSubject)?.label}*/}
                         {/*</span>*/}
@@ -168,28 +168,28 @@ const KpiChartByClass = ({ kpiName = "KPI Học tập", kpiType = 'TDS' }) => {
             {/* --- CONTROLS --- */}
             <div className={styles.chartControls}>
                 {/* 1. Chọn Khối */}
-                <div className={styles.controlGroup}>
-                    <div className={styles.label}>Chọn Khối:</div>
-                    <RadioDropdown
-                        className={styles.dropdownShort}
-                        options={GRADE_OPTIONS}
-                        value={selectedGrade}
-                        onChange={setSelectedGrade}
-                        placeholder="Chọn khối"
-                    />
-                </div>
+                {/*<div className={styles.controlGroup}>*/}
+                {/*    <div className={styles.label}>Chọn Khối:</div>*/}
+                {/*    <RadioDropdown*/}
+                {/*        className={styles.dropdownShort}*/}
+                {/*        options={GRADE_OPTIONS}*/}
+                {/*        value={selectedGrade}*/}
+                {/*        onChange={setSelectedGrade}*/}
+                {/*        placeholder="Chọn khối"*/}
+                {/*    />*/}
+                {/*</div>*/}
 
-                {/* 2. Chọn Môn học (MỚI) */}
-                <div className={styles.controlGroup}>
-                    <div className={styles.label}>Môn học:</div>
-                    <RadioDropdown
-                        className={styles.dropdownMedium} // Đảm bảo bạn có class này hoặc dùng dropdown
-                        options={SUBJECT_OPTIONS}
-                        value={selectedSubject}
-                        onChange={setSelectedSubject}
-                        placeholder="Chọn môn học"
-                    />
-                </div>
+                {/*/!* 2. Chọn Môn học (MỚI) *!/*/}
+                {/*<div className={styles.controlGroup}>*/}
+                {/*    <div className={styles.label}>Môn học:</div>*/}
+                {/*    <RadioDropdown*/}
+                {/*        className={styles.dropdownMedium} // Đảm bảo bạn có class này hoặc dùng dropdown*/}
+                {/*        options={SUBJECT_OPTIONS}*/}
+                {/*        value={selectedSubject}*/}
+                {/*        onChange={setSelectedSubject}*/}
+                {/*        placeholder="Chọn môn học"*/}
+                {/*    />*/}
+                {/*</div>*/}
 
                 {/* 3. Chọn Thời gian (Checkbox - Multi Select) */}
                 <div className={styles.controlGroup}>
