@@ -13,7 +13,7 @@ import GradeDistribution from "./GradeDistribution.jsx";
 const TabOverview = () => {
     return (
         <div className={styles.overviewGrid}>
-            <GradeDistribution/>
+            {/*<GradeDistribution/>*/}
             <GradeCorrelation/>
         </div>
     );

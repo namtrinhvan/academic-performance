@@ -57,7 +57,7 @@ const GradeCorrelation = () => {
     return (
         <div className={styles.section}>
             <div className={styles.sectionTitle}>
-                <h3>2. Tương quan điểm MOET và TDS</h3>
+                <h3>1. Tương quan điểm MOET và TDS</h3>
             </div>
             <div className={styles.container}>
                 {/* --- COMMON CONTROLS --- */}

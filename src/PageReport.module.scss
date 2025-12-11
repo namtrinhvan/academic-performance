@@ -2073,3 +2073,76 @@ $tooltip-fail-border: #fec84b;
   cursor: pointer;
   border-radius: 5px;
 }
+
+// ... Các phần cũ giữ nguyên
+
+// --- NEW: TOOLBAR TRONG PHẦN DRILL-DOWN ---
+.drillToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background-color: #fff;
+  border-bottom: 1px solid $border-color;
+  gap: 16px;
+  flex-wrap: wrap;
+
+  .drillTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    font-weight: 700;
+    color: $text-primary;
+
+    .highlight {
+      color: #0056b3;
+      background: #eff8ff;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+    }
+  }
+
+  .drillControls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .controlLabel {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $text-secondary;
+    }
+
+    // Dropdown chọn nhiều thời gian
+    .multiSelectTime {
+      width: 250px;
+    }
+  }
+}
+
+// Chỉnh sửa lại breadcrumb một chút cho đẹp
+.breadcrumb {
+  padding: 10px 24px;
+  background-color: #f9fafb; // Nhạt hơn header
+  border-bottom: 1px solid $border-color;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  color: $text-secondary;
+
+  .crumbItem {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+
+    &.active {
+      color: #0056b3;
+      font-weight: 700;
+    }
+  }
+}
+
