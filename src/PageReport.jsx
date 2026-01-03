@@ -32,8 +32,8 @@ const PageReport = () => {
 
     const TABS = [
         {id: 'kpi-report', label: 'Báo cáo KPI', icon:<></>},
-        {id: 'overview', label: 'Tổng quan', icon: <></>},
-        // {id: 'analysis', label: 'Phân tích', icon: <></>},
+        // {id: 'overview', label: 'Tổng quan', icon: <></>},
+        {id: 'analysis', label: 'Chi tiết', icon: <></>},
         {id: 'kpi-setup', label: 'Thiết lập KPI', icon: <RiSettings3Fill  />},
     ];
 

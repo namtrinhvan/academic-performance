@@ -13,10 +13,10 @@ import {
 
 // --- 1. CONFIGURATION & MOCK DATA ---
 const SCOPE_OPTIONS = [
-    { label: 'Học sinh (Student)', value: 'STUDENT' },
-    { label: 'Lớp học (Class)', value: 'CLASS' },
-    { label: 'Khối (Grade)', value: 'GRADE' },
-    { label: 'Môn học (Subject)', value: 'SUBJECT' },
+    { label: 'Học sinh', value: 'STUDENT' },
+    { label: 'Lớp học', value: 'CLASS' },
+    { label: 'Khối', value: 'GRADE' },
+    { label: 'Môn học', value: 'SUBJECT' },
 ];
 
 // Giả lập Database để search
@@ -28,7 +28,7 @@ const MOCK_DB = {
         type: 'STUDENT'
     })),
     CLASS: [
-        { id: 'C1', label: '10 Discover 1', sub: 'Khối 10 - GVCN: Cô Hoa', type: 'CLASS' },
+        { id: 'C1', label: '10 Discover 1', sub: 'Khối 10', type: 'CLASS' },
         { id: 'C2', label: '10 Adventure 2', sub: 'Khối 10 - GVCN: Thầy Nam', type: 'CLASS' },
         { id: 'C3', label: '11 Journey 1', sub: 'Khối 11 - GVCN: Cô Lan', type: 'CLASS' },
         { id: 'C4', label: '12 Discover 3', sub: 'Khối 12 - GVCN: Thầy Hùng', type: 'CLASS' },
@@ -50,7 +50,7 @@ const MOCK_DB = {
 
 const TabAnalysis = () => {
     // --- 2. STATE MANAGEMENT ---
-    const [searchScope, setSearchScope] = useState('STUDENT');
+    const [searchScope, setSearchScope] = useState('CLASS');
     const [searchTerm, setSearchTerm] = useState('');
     const [suggestions, setSuggestions] = useState([]);
     const [isSearching, setIsSearching] = useState(false);
@@ -131,11 +131,20 @@ const TabAnalysis = () => {
 
     return (
         <div className={styles.analysisContainer}>
+            <div>
 
-            {/* --- SECTION 1: SEARCH BAR AREA --- */}
+            </div>
             <div className={styles.searchSection} ref={searchRef}>
-                <div className={styles.searchBarWrapper}>
 
+                <div className={styles.searchBarWrapper}>
+                    <div className={styles.scopeGroup}>
+                        <RadioDropdown
+                            className={styles.scopeDropdown}
+                            options={SCOPE_OPTIONS}
+                            value={searchScope}
+                            onChange={handleScopeChange}
+                        />
+                    </div>
                     {/* INPUT (Chiếm ~80%) */}
                     <div className={styles.inputGroup}>
                         <div className={styles.searchIcon}>
@@ -183,20 +192,7 @@ const TabAnalysis = () => {
                         )}
                     </div>
 
-                    {/* SCOPE SELECTOR (Chiếm ~20%) */}
-                    <div className={styles.scopeGroup}>
-                        <RadioDropdown
-                            className={styles.scopeDropdown}
-                            options={SCOPE_OPTIONS}
-                            value={searchScope}
-                            onChange={handleScopeChange}
-                        />
-                    </div>
                 </div>
-
-                <p className={styles.helperText}>
-                    Chọn đối tượng phân tích ở bên phải, sau đó nhập từ khóa để tìm kiếm dữ liệu chi tiết.
-                </p>
             </div>
 
             {/* --- SECTION 2: RESULT / CONTENT AREA --- */}
@@ -216,18 +212,8 @@ const TabAnalysis = () => {
                                 <button className={styles.actionBtn}>Xuất báo cáo PDF</button>
                             </div>
                         </div>
+                        <div>
 
-                        {/* Placeholder cho nội dung phân tích (Biểu đồ, Bảng...) */}
-                        <div className={styles.dashboardPlaceholder}>
-                            <div className={styles.placeholderBox}>
-                                <h3>Tổng quan điểm số</h3>
-                                <p>Biểu đồ phân tích điểm số sẽ hiển thị tại đây...</p>
-                                {/* Bạn có thể nhúng ScatterPlotChart hoặc StackedBarChart vào đây */}
-                            </div>
-                            <div className={styles.placeholderBox}>
-                                <h3>Chi tiết năng lực</h3>
-                                <p>Bảng đánh giá năng lực chi tiết sẽ hiển thị tại đây...</p>
-                            </div>
                         </div>
                     </div>
                 ) : (
@@ -237,13 +223,6 @@ const TabAnalysis = () => {
                             <FaSearch size={40} />
                         </div>
                         <h3>Chưa có đối tượng được chọn</h3>
-                        <p>Vui lòng tìm kiếm và chọn một Học sinh, Lớp, Khối hoặc Môn học để bắt đầu phân tích sâu (Deep Dive).</p>
-                        <div className={styles.suggestionChips}>
-                            <span>Thử tìm:</span>
-                            <button onClick={() => { setSearchScope('STUDENT'); setSearchTerm('Nguyễn'); }}>"Nguyễn"</button>
-                            <button onClick={() => { setSearchScope('CLASS'); setSearchTerm('10 Discover'); }}>"10 Discover"</button>
-                            <button onClick={() => { setSearchScope('SUBJECT'); setSearchTerm('Toán'); }}>"Toán"</button>
-                        </div>
                     </div>
                 )}
             </div>
